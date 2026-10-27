@@ -1,0 +1,12 @@
+{
+  "id": "com.lgtvtune.homescreen",
+  "version": "0.0.1",
+  "vendor": "lgtv-debloat",
+  "type": "web",
+  "main": "index.html",
+  "title": "Home",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "requiredACG": ["application.operation", "application.launcher"],
+  "disableBackHistoryAPI": true
+}

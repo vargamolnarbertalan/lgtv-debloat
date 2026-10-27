@@ -1,0 +1,39 @@
+=== TV Performance Snapshot — AFTER optimization + reboot ===
+Captured: 2026-10-25 01:49:57 CEST, ~1 min after boot
+
+=== upstart jobs ===
+webos-preload-manager stop/waiting
+contentminer stop/waiting
+
+=== swappiness ===
+10
+
+=== update-block flag ===
+-rw-r--r--    1 root     root             0 Oct 25 01:42 /var/luna/preferences/webosbrew_block_updates
+
+=== /etc/hosts (HBC's native update-block mechanism, auto-applied) ===
+127.0.0.1       localhost.localdomain           localhost
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+# This file is dynamically regenerated on boot by webosbrew startup script
+127.0.0.1 snu.lge.com su-dev.lge.com su.lge.com su-ssl.lge.com
+::1 snu.lge.com su-dev.lge.com su.lge.com su-ssl.lge.com
+
+=== free -m ===
+              total        used        free      shared  buff/cache   available
+Mem:            964         454          65           8         444         462
+Swap:           699          54         645
+
+(Before, ~14 min post-boot, with preload-manager still active:
+              total        used        free      shared  buff/cache   available
+Mem:            964         741          16           5         206         178
+Swap:           699         278         423)
+
+=== top 10 memory users, after ===
+Netflix and YouTube/Cobalt are ABSENT from the top 10 entirely (previously
+~91MB and ~96MB respectively, both tagged "reason":"preload") — confirms
+preload-manager is no longer preloading them at boot.

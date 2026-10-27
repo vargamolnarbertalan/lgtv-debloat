@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Home</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #0b0b0d;
+      color: #eee;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow: hidden;
+    }
+    #clock {
+      text-align: center;
+      font-size: 96px;
+      font-weight: 200;
+      letter-spacing: 2px;
+      padding: 48px 0 8px;
+    }
+    #date {
+      text-align: center;
+      font-size: 24px;
+      color: #888;
+      margin-bottom: 48px;
+    }
+    #status {
+      text-align: center;
+      color: #888;
+      font-size: 20px;
+    }
+    #appgrid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-content: flex-start;
+      gap: 32px;
+      padding: 0 80px;
+    }
+    .app-tile {
+      width: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+    .app-tile__icon {
+      width: 110px;
+      height: 110px;
+      border-radius: 24px;
+      background: #1c1c20;
+      object-fit: contain;
+      display: block;
+    }
+    .app-tile.focused .app-tile__icon {
+      outline: 6px solid #4da3ff;
+      outline-offset: -6px;
+    }
+    .app-tile__label {
+      margin-top: 12px;
+      font-size: 17px;
+      text-align: center;
+      color: #ccc;
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock">--:--</div>
+  <div id="date"></div>
+  <div id="status"></div>
+  <div id="appgrid"></div>
+
+  <script src="webOSTVjs-1.2.13/webOSTV.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>

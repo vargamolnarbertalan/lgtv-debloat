@@ -1,0 +1,4 @@
+scripts/tv_config_local.py
+*.ipk
+__pycache__/
+*.pyc
