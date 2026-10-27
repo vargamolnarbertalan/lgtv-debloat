@@ -32,14 +32,25 @@ initctl stop webos-preload-manager 2>/dev/null || true
 initctl stop contentminer 2>/dev/null || true
 echo 10 > /proc/sys/vm/swappiness 2>/dev/null
 
-# Auto-launch the custom home screen shortly after boot. Backgrounded with a
-# delay so this hook itself returns immediately (run-parts/boot isn't
-# blocked waiting on it) and so the app manager has had time to come up --
-# this only auto-launches an app, it does not touch the physical Home
-# button's own target, which still opens webOS's stock launcher.
+# Auto-launch the custom home screen as early as possible after boot.
+# Backgrounded so this hook itself returns immediately (run-parts/boot
+# isn't blocked waiting on it) -- this only auto-launches an app, it does
+# not touch the physical Home button's own target, which still opens
+# webOS's stock launcher.
+#
+# No fixed pre-sleep: a blind guess is either too short (app manager not
+# up yet, launch silently fails, nothing retries) or too long (wastes time
+# on a boot that was ready sooner). Instead this retries the launch call
+# every 2s for up to 60s, stopping as soon as one actually succeeds --
+# fires the instant the system can take it, on any boot speed.
 (
-  sleep 15
-  luna-send-pub -n 1 luna://com.webos.applicationManager/launch '{"id":"com.lgtvtune.homescreen"}' >/dev/null 2>&1
+  i=0
+  while [ "$i" -lt 30 ]; do
+    out=$(luna-send-pub -n 1 luna://com.webos.applicationManager/launch '{"id":"com.lgtvtune.homescreen"}' 2>&1)
+    echo "$out" | grep -q '"returnValue":true' && break
+    i=$((i + 1))
+    sleep 2
+  done
 ) &
 HOOK_EOF
 
